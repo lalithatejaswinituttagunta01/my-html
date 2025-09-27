@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevOps Lifecycle Visualization - Colorful Linear Flow</title>
+    <style>
+        /* Define Stage-Specific Colors */
+        :root {
+            /* Stage Colors */
+            --color-plan: #3498db;      /* Blue */
+            --color-develop: #2ecc71;   /* Emerald Green */
+            --color-build: #f1c40f;     /* Yellow */
+            --color-test: #e74c3c;      /* Red */
+            --color-release: #9b59b6;   /* Amethyst */
+            --color-deploy: #1abc9c;    /* Turquoise */
+            --color-operate: #e67e22;   /* Carrot Orange */
+            --color-monitor: #34495e;   /* Dark Blue/Slate */
+
+            /* General Theme */
+            --bg-color: #f7f9fc;    /* Very light background */
+            --text-color: #333333;  /* Dark text for contrast */
+            --header-color: #34495e;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 30px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            text-align: center;
+        }
+
+        h1 {
+            color: var(--header-color);
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+        
+        p {
+            color: #7f8c8d;
+            margin-bottom: 40px;
+        }
+
+        /* Container for the main diagram - Linear Layout */
+        .devops-container {
+            display: flex;
+            flex-wrap: wrap; 
+            justify-content: center;
+            gap: 40px; /* Space for arrows */
+            max-width: 1400px; 
+            margin: 0 auto;
+        }
+
+        /* ------------------ Animations ------------------ */
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.02); opacity: 1; } 
+            100% { transform: scale(1); opacity: 0.9; }
+        }
+
+        /* Style for each stage card */
+        .stage-card {
+            width: 180px;
+            height: 180px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: pulse 4s infinite ease-in-out;
+            margin-bottom: 20px;
+        }
+
+        /* Assigning Specific Colors */
+        #plan { border-bottom: 5px solid var(--color-plan); }
+        #develop { border-bottom: 5px solid var(--color-develop); }
+        #build { border-bottom: 5px solid var(--color-build); }
+        #test { border-bottom: 5px solid var(--color-test); }
+        #release { border-bottom: 5px solid var(--color-release); }
+        #deploy { border-bottom: 5px solid var(--color-deploy); }
+        #operate { border-bottom: 5px solid var(--color-operate); }
+        #monitor { border-bottom: 5px solid var(--color-monitor); }
+
+        .stage-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            animation-play-state: paused;
+        }
+
+        .stage-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: var(--header-color);
+            margin-bottom: 5px;
+        }
+
+        .stage-description {
+            font-size: 0.8em;
+            color: var(--text-color);
+            line-height: 1.3;
+        }
+
+        /* Arrows (Static and Linear) */
+        
+        /* General styling for arrows between stages */
+        .stage-card:not(#monitor)::after {
+            content: '→';
+            position: absolute;
+            top: 50%;
+            right: -30px; 
+            transform: translateY(-50%);
+            font-size: 3em;
+            color: #7f8c8d; /* Neutral arrow color */
+            z-index: 10;
+        }
+
+        /* Remove all arrows on Monitor stage */
+        #monitor::after,
+        #monitor::before {
+            content: none !important;
+        }
+
+        /* Responsive stack for mobile */
+        @media (max-width: 767px) {
+            .stage-card {
+                width: 100%;
+                height: auto;
+                margin-bottom: 40px;
+            }
+            
+            /* Vertical arrows for mobile view */
+            .stage-card:not(#monitor)::after {
+                content: '↓';
+                position: absolute;
+                bottom: -35px;
+                left: 50%;
+                transform: translateX(-50%);
+                font-size: 2em;
+                color: #7f8c8d;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>DevOps Lifecycle</h1>
+    <p>Each stage represents a distinct phase in delivering high-quality software to the end user.</p>
+
+    <div class="devops-container">
+        
+        <div class="stage-card" id="plan">
+            <div class="stage-title" style="color: var(--color-plan);">PLAN</div>
+            <div class="stage-description">Define goals, gather requirements, and plan the next feature or fix. (e.g., *Feature: Add facial enrollment UI*).</div>
+        </div>
+
+        <div class="stage-card" id="develop">
+            <div class="stage-title" style="color: var(--color-develop);">DEVELOP</div>
+            <div class="stage-description">Write code, review code, manage version control (Git), and commit changes. (e.g., *Coding the OpenCV recognition module*).</div>
+        </div>
+
+        <div class="stage-card" id="build">
+            <div class="stage-title" style="color: var(--color-build);">BUILD</div>
+            <div class="stage-description">Compile, package, and integrate code with dependencies, often using automation servers. (e.g., *Creating the Docker image*).</div>
+        </div>
+
+        <div class="stage-card" id="test">
+            <div class="stage-title" style="color: var(--color-test);">TEST</div>
+            <div class="stage-description">Execute automated tests (unit, integration, performance) to check for defects. (e.g., *Testing facial recognition accuracy*).</div>
+        </div>
+
+        <div class="stage-card" id="release">
+            <div class="stage-title" style="color: var(--color-release);">RELEASE</div>
+            <div class="stage-description">Approve and prepare the tested build for deployment, versioning the artifacts. (e.g., *Tagging the stable build v2.0*).</div>
+        </div>
+
+        <div class="stage-card" id="deploy">
+            <div class="stage-title" style="color: var(--color-deploy);">DEPLOY</div>
+            <div class="stage-description">Automate the installation and configuration of the release artifact to the production environment. (e.g., *Rolling out update to Kiosks*).</div>
+        </div>
+
+        <div class="stage-card" id="operate">
+            <div class="stage-title" style="color: var(--color-operate);">OPERATE</div>
+            <div class="stage-description">Manage the production environment, ensure stability, and handle infrastructure needs. (e.g., *System running and logging attendance*).</div>
+        </div>
+        
+        <div class="stage-card" id="monitor">
+            <div class="stage-title" style="color: var(--color-monitor);">MONITOR</div>
+            <div class="stage-description">Collect data on application performance, usage, and errors to inform future planning. (e.g., *Tracking latency and log errors*).</div>
+        </div>
+
+    </div>
+
+</body>
+</html>
